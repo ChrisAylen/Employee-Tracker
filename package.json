@@ -1,0 +1,23 @@
+{
+  "name": "employee-tracker",
+  "version": "1.0.0",
+  "description": "A console application that provides a vies of databases tables and views",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChrisAylen/Employee-Tracker.git"
+  },
+  "author": "Chris Aylen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ChrisAylen/Employee-Tracker/issues"
+  },
+  "homepage": "https://github.com/ChrisAylen/Employee-Tracker#readme",
+  "dependencies": {
+    "inquirer": "^8.2.4",
+    "mysql2": "^2.3.3"
+  }
+}
