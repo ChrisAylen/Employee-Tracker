@@ -26,10 +26,15 @@ class DB {
             manager.first_name AS manager_first_name, manager.last_name AS manager_last_name from employee 
             JOIN role on employee.id=role.id 
             JOIN department on role.department_id = department_id join employee manager on manager.id = employee.manager_id;`
-    
-        )
-
+         )
     }
+    addADepartment =(department)=>{
+        return this.connection.promise().query("INSERT INTO department SET ?", department)
+    }
+    addARole= (role) =>{
+        return this.connection.promise().query("INSERT INTO role SET ?", role)
+    }
+
 }
 
 module.exports = new DB(connection);

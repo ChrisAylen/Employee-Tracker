@@ -95,12 +95,63 @@ function mainMenu() {
 
                 break;
             case "add-a-department":
+                prompt([{
+                    name: "name",
+                    message: "What is the name of the department you want to add?"
+                }])
+                    .then(res => {
+                        let name = res;
+                        db.addADepartment(name)
+                            .then(() => console.log(`${name.name} has been added as a new department`))
+                            .then(() => mainMenu())
+                    })
 
 
 
                 break;
 
             case "add-a-role":
+                //Need an object list of departments
+                db.viewAllDepartments()
+                    .then(([rows]) => {
+                        let departments = rows;
+                        const listOfdepartments = departments.map(({ id, name }) => ({
+                            name: name,
+                            value: id
+
+                        }));
+                        console.log(listOfdepartments)
+                        prompt([
+                            {
+                                //Need the title of the role
+                                name: "title",
+                                message: "What is the title of the role you wish to add?"
+                            },
+                            {
+                                //Need the salary of the role
+                                name: "salary",
+                                message: "What is the salary of this role"
+                            },
+                            {
+                                type: "list",
+                                name: "department_id",
+                                message: "Which department do you want to add this role to?",
+                                choices:listOfdepartments
+                            }
+                        ])
+                        //Add the new role
+                        .then(role=>{
+                            db.addARole(role)
+                            .then(()=>console.log("Added a role"))
+                            .then(()=>mainMenu())
+                        })
+
+                    })
+
+
+
+
+                //Need the chosen department ID
 
                 break;
 
