@@ -25,6 +25,15 @@ The application allows the user to add and delete notes.
 ## Installation
     
 'npm i' to install the necessary dependencies.
+
+Create a file named .env with the following contents:
+
+```
+host=yourMySQLhost      
+port=yourMySQLport
+user=your YourMySQLUser    
+password=yourmySQLPassword
+```
     
 ## Usage
 
