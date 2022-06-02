@@ -22,10 +22,11 @@ class DB {
     //employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to
     viewAllEmployees = () => {
         return this.connection.promise().query(
-            `Select employee.id, employee.first_name, employee.last_name, role.title, department.name AS department_name, role.salary, 
-            manager.first_name AS manager_first_name, manager.last_name AS manager_last_name from employee 
-            JOIN role on employee.id=role.id 
-            JOIN department on role.department_id = department_id join employee manager on manager.id = employee.manager_id;`
+            `SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department_name, role.salary, 
+            CONCAT(manager.first_name, ' ', manager.last_name) AS manager from employee 
+            LEFT JOIN role on employee.id=role.id 
+            LEFT JOIN department on role.department_id = department.id 
+            LEFT join employee manager on manager.id = employee.manager_id;`
          )
     }
     addADepartment =(department)=>{
@@ -33,6 +34,14 @@ class DB {
     }
     addARole= (role) =>{
         return this.connection.promise().query("INSERT INTO role SET ?", role)
+    }
+    addAnEmployee = (employee)=>{
+        return this.connection.promise().query("INSERT INTO employee SET ?", employee)
+    }
+    getDepartmentManagersForRole = (roleId)=>{
+        return this.connection.promise().query(`Select employee.id AS manager_id, CONCAT(first_name, ' ', last_name) AS manager_name  FROM employee
+        JOIN role on role_id=role.id
+         Where manager_id IS NOT NULL AND role_id=${roleId}`)
     }
 
 }

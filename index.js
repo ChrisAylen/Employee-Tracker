@@ -120,7 +120,7 @@ function mainMenu() {
                             value: id
 
                         }));
-                        console.log(listOfdepartments)
+                        //console.log(listOfdepartments)
                         prompt([
                             {
                                 //Need the title of the role
@@ -133,29 +133,68 @@ function mainMenu() {
                                 message: "What is the salary of this role"
                             },
                             {
+                                //Need the chosen department ID
                                 type: "list",
                                 name: "department_id",
                                 message: "Which department do you want to add this role to?",
-                                choices:listOfdepartments
+                                choices: listOfdepartments
                             }
                         ])
-                        //Add the new role
-                        .then(role=>{
-                            db.addARole(role)
-                            .then(()=>console.log("Added a role"))
-                            .then(()=>mainMenu())
-                        })
+                            //Add the new role
+                            .then(role => {
+                                console.log(role)
+                                db.addARole(role)
+                                    .then(() => console.log("Added a role"))
+                                    .then(() => mainMenu())
+                            })
 
                     })
-
-
-
-
-                //Need the chosen department ID
-
                 break;
 
             case "add-a-employee":
+
+                //Get a list of roles to add the employee to
+                db.viewAllRoles()
+                    .then(([rows]) => {
+                        let roles = rows;
+                        const listofRoles = roles.map(({ department_name, job_title, role_id, salary }) => ({
+                            name: job_title,
+                            value: role_id
+
+                        }));
+
+                        //console.table(roles);
+                        prompt([
+                            {
+                                type: "list",
+                                name: "role_id",
+                                message: "Select a role for the employee?",
+                                choices: listofRoles
+                            }
+
+                        ])
+                        .then(role=>{
+                            //let role_id = res;
+                            console.log(role)
+                            db.getDepartmentManagersForRole(role.role_id)
+                            .then(([rows])=> {
+                                    let managers=rows;
+                                    console.log(managers)
+                                    
+                            })
+
+
+                        })
+                        // .then(
+                        // db.getDepartmentManagersForRole(role_id)
+                        // .then(([rows])=> {
+                        //     let managers=rows;
+                        //     console.log(managers)
+                        // }))
+                    })
+
+                //Choose a RELEVANT manager to add to the new employee
+
 
                 break;
 
