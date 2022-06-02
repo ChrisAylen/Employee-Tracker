@@ -61,10 +61,10 @@ function mainMenu() {
         }
     ]).then(res => {
         //place logic for the chosen action
+        //console.clear();
         let choice = res.choice;
         switch (choice) {
             case "view-all-departments":
-                console.clear();
                 db.viewAllDepartments()
                     .then(([rows]) => {
                         let departments = rows;
@@ -75,7 +75,7 @@ function mainMenu() {
 
                 break;
             case "view-all-roles":
-                console.clear();
+
                 db.viewAllRoles()
                     .then(([rows]) => {
                         let roles = rows;
@@ -85,7 +85,7 @@ function mainMenu() {
 
                 break;
             case "view-all-employees":
-                console.clear();
+
                 db.viewAllEmployees()
                     .then(([rows]) => {
                         let employees = rows;
@@ -95,7 +95,7 @@ function mainMenu() {
 
                 break;
             case "add-a-department":
-                console.clear();
+
 
 
                 break;
