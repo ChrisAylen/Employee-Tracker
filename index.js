@@ -142,7 +142,7 @@ function mainMenu() {
                         ])
                             //Add the new role
                             .then(role => {
-                                console.log(role)
+                                //console.log(role)
                                 db.addARole(role)
                                     .then(() => console.log("Added a role"))
                                     .then(() => mainMenu())
@@ -160,7 +160,7 @@ function mainMenu() {
                     role_id: "",
                     manager_id: ""
                 };
-                
+
                 db.viewAllRoles()
                     .then(([rows]) => {
                         let roles = rows;
@@ -172,22 +172,22 @@ function mainMenu() {
 
                         //console.table(roles);
                         prompt([
-                            
+
                             {
-                                    pageSize: listofRoles.length,
-                                    type: "list",
-                                    name: "role_id",
-                                    message: "Select a role for the employee?",
-                                    choices: listofRoles
-                                }
-                            
+                                pageSize: listofRoles.length,
+                                type: "list",
+                                name: "role_id",
+                                message: "Select a role for the employee?",
+                                choices: listofRoles
+                            }
+
 
                         ])
                             .then(role => {
                                 //Choose a RELEVANT manager to add to the new employee
                                 //let role_id = res;
-                                console.log(role)
-                                
+                                //console.log(role)
+
                                 db.getAllManagers()
                                     .then(([rows]) => {
                                         let managers = rows;
@@ -209,7 +209,7 @@ function mainMenu() {
                                             }
                                         ])
                                             .then(manager => {
-                                                console.table(manager)
+                                                //console.table(manager)
                                                 prompt([
                                                     {
                                                         name: "first_name",
@@ -221,16 +221,16 @@ function mainMenu() {
                                                         message: "What is the last name of the new employee?"
                                                     }
                                                 ])
-                                                .then(employee_name => {
-                                                    newEmployee.first_name = employee_name.first_name;
-                                                    newEmployee.last_name = employee_name.last_name;
-                                                    newEmployee.role_id = role.role_id;
-                                                    newEmployee.manager_id = manager.employee_id;
-                                                    db.addAnEmployee(newEmployee);
-                                                    console.log(newEmployee) + " has been added as a new employee";
-                                                    mainMenu();
-                                                    //console.log(role.role_id + manager.employee_id + employee_name.first_namne + ' ' + employee_name.last_name)
-                                                })
+                                                    .then(employee_name => {
+                                                        newEmployee.first_name = employee_name.first_name;
+                                                        newEmployee.last_name = employee_name.last_name;
+                                                        newEmployee.role_id = role.role_id;
+                                                        newEmployee.manager_id = manager.employee_id;
+                                                        db.addAnEmployee(newEmployee);
+                                                        console.log(newEmployee) + " has been added as a new employee";
+                                                        mainMenu();
+                                                        //console.log(role.role_id + manager.employee_id + employee_name.first_namne + ' ' + employee_name.last_name)
+                                                    })
                                             })
 
                                     })
@@ -250,6 +250,78 @@ function mainMenu() {
                 break;
 
             case "update-an-employee-role":
+                let employeeToUpdate = {
+                    employee_id: "",
+                    role_id: "",
+                };
+                //Get a list of employees
+                db.viewAllEmployees()
+                    .then(([rows]) => {
+                        let employees = rows;
+                        const listofEmployees = employees.map(({ first_name, last_name, id }) => ({
+                            name: first_name + ' ' + last_name,
+                            value: id
+                        }));
+                        //console.log(listofEmployees)
+                        let thePageSize;
+
+                        //Display all the roles without scrolling if there are 20 or less roles
+                        if (listofEmployees.length <= 20) {
+                            thePageSize = listofEmployees.length;
+                        }
+                        else {
+                            thePageSize = 20;
+                        }
+                        prompt([
+                            {
+                                pageSize: thePageSize,
+                                type: "list",
+                                name: "employee_id",
+                                message: "Select an employee to update",
+                                choices: listofEmployees
+                            }
+
+                        ])
+                            .then(employee => {
+                                //Get a list of roles to add the employee to
+                                db.viewAllRoles()
+                                    .then(([rows]) => {
+                                        let roles = rows;
+                                        const listofRoles = roles.map(({ department_name, job_title, role_id, salary }) => ({
+                                            name: job_title,
+                                            value: role_id
+
+                                        }));
+                                        //console.table(roles);
+                                        prompt([
+                                            {
+                                                pageSize: listofRoles.length,
+                                                type: "list",
+                                                name: "role_id",
+                                                message: "Select a role for the employee?",
+                                                choices: listofRoles
+
+
+                                            }
+                                        ])
+                                            .then(role => {
+                                                employeeToUpdate.employee_id = employee.employee_id;
+                                                employeeToUpdate.role_id = role.role_id;
+                                                db.updateEmployeeRole(employeeToUpdate.employee_id, employeeToUpdate.role_id);
+                                                console.log(employeeToUpdate.employee_id + " has been updated to the role of " + employeeToUpdate.role_id);
+                                                mainMenu();
+                                            })
+
+                                    })
+                            })
+                    })
+
+
+
+
+
+
+
 
                 break;
 

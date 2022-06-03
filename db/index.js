@@ -41,6 +41,12 @@ class DB {
     getAllManagers = ()=>{
         return this.connection.promise().query(`SELECT * FROM manager`)
     }
+    updateEmployeeRole = (employeeId, roleId) =>{
+        return this.connection.promise().query(
+            `UPDATE employee SET role_id = ? WHERE id = ?`,
+            [roleId, employeeId]
+        )
+    }
 
 
 }
