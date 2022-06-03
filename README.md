@@ -14,13 +14,13 @@ The application allows the user to add and delete notes.
 
 * [Usage](#usage)
 
-* [API](#API)
-
 * [Screenshot](#screenshots)
 
 * [Deployed Version](#Deployment)
 
 * [Questions](#questions)
+
+* [To Do](#ToDo)
 
 ## Installation
     
@@ -34,18 +34,42 @@ port=yourMySQLport
 user=your YourMySQLUser    
 password=yourmySQLPassword
 ```
-    
+
+### Setting up the database
+
+run schema.sql at a mySQL prompt to create the database and tables.
+```
+source ./db/schema.sql
+```
+run seeds.sql at a mySQL prompt to seed the database with data.
+```
+source ./db/seeds.sql
+```
+
 ## Usage
 
+Use the following commands to run the application:
 
+```
+View all departments
+View all roles
+View all employees
+Add a department
+Add a role
+Add an employee
+Update an employee role
+Exit
+```
 
 ## API
 
 
 ## Screenshots
 
-![alt Landing Page](./assets/images/)
-![alt Landing Page](./assets/images/)))
+![alt Landing Page](./assets/images/MainMenu.PNG)
+![alt Landing Page](./assets/images/ViewDepartments.PNG)
+![alt Landing Page](./assets/images/ViewAllRoles.PNG)
+![alt Landing Page](./assets/images/ViewAllEmployees.PNG)
 
 ## Deployment
 
@@ -58,4 +82,12 @@ This project is licenced under MIT
 ## Questions
 
 [More of my work can be found here](https://github.com/ChrisAylen)
+
+## ToDo
+
+The applicaiton needs:
+    * guarding adding
+    * Tests adding
+    * Better moduralisation
+
     
