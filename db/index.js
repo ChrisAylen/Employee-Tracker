@@ -38,11 +38,10 @@ class DB {
     addAnEmployee = (employee)=>{
         return this.connection.promise().query("INSERT INTO employee SET ?", employee)
     }
-    getDepartmentManagersForRole = (roleId)=>{
-        return this.connection.promise().query(`Select employee.id AS manager_id, CONCAT(first_name, ' ', last_name) AS manager_name  FROM employee
-        JOIN role on role_id=role.id
-         Where manager_id IS NOT NULL AND role_id=${roleId}`)
+    getAllManagers = ()=>{
+        return this.connection.promise().query(`SELECT * FROM manager`)
     }
+
 
 }
 

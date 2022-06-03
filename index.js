@@ -174,12 +174,13 @@ function mainMenu() {
 
                         ])
                         .then(role=>{
+                            //Choose a RELEVANT manager to add to the new employee
                             //let role_id = res;
                             console.log(role)
-                            db.getDepartmentManagersForRole(role.role_id)
+                            db.getAllManagers()
                             .then(([rows])=> {
                                     let managers=rows;
-                                    console.log(managers)
+                                    console.table(managers)
                                     
                             })
 
@@ -193,7 +194,6 @@ function mainMenu() {
                         // }))
                     })
 
-                //Choose a RELEVANT manager to add to the new employee
 
 
                 break;

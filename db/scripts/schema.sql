@@ -30,3 +30,9 @@ CREATE TABLE employee (
     FOREIGN KEY (manager_id)
     REFERENCES employee(id)
 );
+
+CREATE VIEW manager AS
+SELECT employee.id AS employee_id, first_name,last_name,role_id, department.name AS department_name, role.title AS role_title FROM employee
+JOIN role on role_id =role.id
+JOIN department on department_id=department.id
+WHERE manager_id IS NULL;
