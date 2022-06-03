@@ -196,6 +196,10 @@ function mainMenu() {
                                             name: first_name + ' ' + last_name,
                                             value: employee_id
                                         }));
+                                        listofManagers.push({
+                                            name: "None",
+                                            value: null
+                                        })
                                         prompt([
                                             {
                                                 type: "list",
