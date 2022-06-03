@@ -154,6 +154,13 @@ function mainMenu() {
             case "add-a-employee":
 
                 //Get a list of roles to add the employee to
+                let newEmployee = {
+                    first_name: "",
+                    last_name: "",
+                    role_id: "",
+                    manager_id: ""
+                };
+                
                 db.viewAllRoles()
                     .then(([rows]) => {
                         let roles = rows;
@@ -165,18 +172,22 @@ function mainMenu() {
 
                         //console.table(roles);
                         prompt([
+                            
                             {
-                                type: "list",
-                                name: "role_id",
-                                message: "Select a role for the employee?",
-                                choices: listofRoles
-                            }
+                                    pageSize: listofRoles.length,
+                                    type: "list",
+                                    name: "role_id",
+                                    message: "Select a role for the employee?",
+                                    choices: listofRoles
+                                }
+                            
 
                         ])
                             .then(role => {
                                 //Choose a RELEVANT manager to add to the new employee
                                 //let role_id = res;
                                 console.log(role)
+                                
                                 db.getAllManagers()
                                     .then(([rows]) => {
                                         let managers = rows;
@@ -193,6 +204,30 @@ function mainMenu() {
                                                 choices: listofManagers
                                             }
                                         ])
+                                            .then(manager => {
+                                                console.table(manager)
+                                                prompt([
+                                                    {
+                                                        name: "first_name",
+                                                        message: "What is the first name of the new employee?"
+
+                                                    },
+                                                    {
+                                                        name: "last_name",
+                                                        message: "What is the last name of the new employee?"
+                                                    }
+                                                ])
+                                                .then(employee_name => {
+                                                    newEmployee.first_name = employee_name.first_name;
+                                                    newEmployee.last_name = employee_name.last_name;
+                                                    newEmployee.role_id = role.role_id;
+                                                    newEmployee.manager_id = manager.employee_id;
+                                                    db.addAnEmployee(newEmployee);
+                                                    console.log(newEmployee) + " has been added as a new employee";
+                                                    mainMenu();
+                                                    //console.log(role.role_id + manager.employee_id + employee_name.first_namne + ' ' + employee_name.last_name)
+                                                })
+                                            })
 
                                     })
 
