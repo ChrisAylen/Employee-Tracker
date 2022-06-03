@@ -173,19 +173,31 @@ function mainMenu() {
                             }
 
                         ])
-                        .then(role=>{
-                            //Choose a RELEVANT manager to add to the new employee
-                            //let role_id = res;
-                            console.log(role)
-                            db.getAllManagers()
-                            .then(([rows])=> {
-                                    let managers=rows;
-                                    console.table(managers)
-                                    
+                            .then(role => {
+                                //Choose a RELEVANT manager to add to the new employee
+                                //let role_id = res;
+                                console.log(role)
+                                db.getAllManagers()
+                                    .then(([rows]) => {
+                                        let managers = rows;
+                                        console.table(managers)
+                                        const listofManagers = managers.map(({ first_name, last_name, employee_id }) => ({
+                                            name: first_name + ' ' + last_name,
+                                            value: employee_id
+                                        }));
+                                        prompt([
+                                            {
+                                                type: "list",
+                                                name: "employee_id",
+                                                message: "Select a manager",
+                                                choices: listofManagers
+                                            }
+                                        ])
+
+                                    })
+
+
                             })
-
-
-                        })
                         // .then(
                         // db.getDepartmentManagersForRole(role_id)
                         // .then(([rows])=> {
