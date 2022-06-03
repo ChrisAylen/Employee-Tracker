@@ -3,9 +3,6 @@ const db = require("./db");
 require('dotenv').config();
 const connection = require("./db/connection");
 
-
-//view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
-
 console.clear();
 mainMenu();
 
@@ -120,7 +117,7 @@ function mainMenu() {
                             value: id
 
                         }));
-                        //console.log(listOfdepartments)
+
                         prompt([
                             {
                                 //Need the title of the role
@@ -142,7 +139,6 @@ function mainMenu() {
                         ])
                             //Add the new role
                             .then(role => {
-                                //console.log(role)
                                 db.addARole(role)
                                     .then(() => console.log("Added a role"))
                                     .then(() => mainMenu())
@@ -150,9 +146,7 @@ function mainMenu() {
 
                     })
                 break;
-
             case "add-a-employee":
-
                 //Get a list of roles to add the employee to
                 let newEmployee = {
                     first_name: "",
@@ -169,8 +163,6 @@ function mainMenu() {
                             value: role_id
 
                         }));
-
-                        //console.table(roles);
                         prompt([
 
                             {
@@ -185,9 +177,6 @@ function mainMenu() {
                         ])
                             .then(role => {
                                 //Choose a RELEVANT manager to add to the new employee
-                                //let role_id = res;
-                                //console.log(role)
-
                                 db.getAllManagers()
                                     .then(([rows]) => {
                                         let managers = rows;
@@ -209,7 +198,6 @@ function mainMenu() {
                                             }
                                         ])
                                             .then(manager => {
-                                                //console.table(manager)
                                                 prompt([
                                                     {
                                                         name: "first_name",
@@ -229,7 +217,6 @@ function mainMenu() {
                                                         db.addAnEmployee(newEmployee);
                                                         console.log(newEmployee) + " has been added as a new employee";
                                                         mainMenu();
-                                                        //console.log(role.role_id + manager.employee_id + employee_name.first_namne + ' ' + employee_name.last_name)
                                                     })
                                             })
 
@@ -237,12 +224,6 @@ function mainMenu() {
 
 
                             })
-                        // .then(
-                        // db.getDepartmentManagersForRole(role_id)
-                        // .then(([rows])=> {
-                        //     let managers=rows;
-                        //     console.log(managers)
-                        // }))
                     })
 
 
@@ -292,7 +273,6 @@ function mainMenu() {
                                             value: role_id
 
                                         }));
-                                        //console.table(roles);
                                         prompt([
                                             {
                                                 pageSize: listofRoles.length,
@@ -338,4 +318,3 @@ function mainMenu() {
         process.exit();
     }
 }
-//module.exports = index.js;
