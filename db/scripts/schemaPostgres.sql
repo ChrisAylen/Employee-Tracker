@@ -15,21 +15,27 @@ DROP TABLE IF EXISTS department CASCADE;
 
 CREATE TABLE department(
 id SERIAL PRIMARY  KEY NOT	NULL,
-name char(30) UNIQUE 	NOT NULL	
+name character varying(30) UNIQUE NOT NULL	
 );
 
 CREATE TABLE role (
     id SERIAL PRIMARY KEY NOT NULL,
-    title CHAR(30) NOT NULL,
+    title character varying(30) NOT NULL,
     salary DECIMAL NOT NULL,
     department_id int NOT NULL References department (id)
 );
 
 CREATE TABLE employee (
     id SERIAL PRIMARY KEY NOT NULL,
-    first_name CHAR(30) NOT NULL,
-    last_name CHAR(30)NOT NULL,
+    first_name character varying(30) NOT NULL,
+    last_name character varying(30) NOT NULL,
     role_id  int NOT NULL REFERENCES role (id),      
     manager_id int REFERENCES employee (id)
 );
+
+CREATE VIEW manager AS
+SELECT employee.id AS employee_id, first_name,last_name,role_id, department.name AS department_name, role.title AS role_title FROM employee
+JOIN role on role_id =role.id
+JOIN department on department_id=department.id
+WHERE manager_id IS NULL;
 

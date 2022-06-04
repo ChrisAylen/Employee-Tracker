@@ -6,46 +6,46 @@ class DB {
         this.connection = connection;
     }
     //job title, role id, the department that role belongs to, and the salary for that rol
-    viewAllRoles = () => {
-        return this.connection.promise().query(
+    viewAllRoles = async () => {
+        const roles = await connection
             `select title as job_title, role.id AS role_id, department.name AS department_name,salary from role 
             JOIN department ON department.id = department_id 
             ORDER BY  department.name;`
-        )
+        return roles;
 
     }
-    viewAllDepartments = () => {
-        return this.connection.promise().query(
+     viewAllDepartments  = async () => {
+         const depts = await connection
             `Select name, id from department;`
-        );
+      return depts
     }
     //employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to
-    viewAllEmployees = () => {
-        return this.connection.promise().query(
+    viewAllEmployees = async () => {
+        const employees = await connection
             `SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department_name, role.salary, 
             CONCAT(manager.first_name, ' ', manager.last_name) AS manager from employee 
             LEFT JOIN role on role_id=role.id 
             LEFT JOIN department on role.department_id = department.id 
             LEFT join employee manager on manager.id = employee.manager_id;`
-        )
+        return employees;
     }
-    addADepartment = (department) => {
-        return this.connection.promise().query("INSERT INTO department SET ?", department)
+    addADepartment = async (department) => {
+        const  dept = await connection `INSERT INTO department ${connection(department)}`
+        return dept;
     }
-    addARole = (role) => {
-        return this.connection.promise().query("INSERT INTO role SET ?", role)
+    addARole = async (role) => {
+         await connection `INSERT INTO role ${connection(role)}`
     }
-    addAnEmployee = (employee) => {
-        return this.connection.promise().query("INSERT INTO employee SET ?", employee)
+    addAnEmployee = async (employee) => {
+         await connection `INSERT INTO employee${connection(employee)}`
     }
-    getAllManagers = () => {
-        return this.connection.promise().query(`SELECT * FROM manager`)
+    getAllManagers = async () => {
+        const managers = await connection `SELECT * FROM manager`
+        return managers
     }
-    updateEmployeeRole = (employeeId, roleId) => {
-        return this.connection.promise().query(
-            `UPDATE employee SET role_id = ? WHERE id = ?`,
-            [roleId, employeeId]
-        )
+    updateEmployeeRole = async (employeeId, roleId) => {
+        await connection`UPDATE employee SET role_id = ${roleId} WHERE id = ${employeeId}`
+        
     }
 }
 

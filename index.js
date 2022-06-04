@@ -63,19 +63,15 @@ function mainMenu() {
         switch (choice) {
             case "view-all-departments":
                 db.viewAllDepartments()
-                    .then(([rows]) => {
-                        let departments = rows;
-                        console.table(departments);
+                    .then((departments) => {
+                       console.table(departments);
                     })
                     .then(() => mainMenu());
-
-
                 break;
             case "view-all-roles":
 
                 db.viewAllRoles()
-                    .then(([rows]) => {
-                        let roles = rows;
+                    .then((roles) => {
                         console.table(roles);
                     })
                     .then(() => mainMenu());
@@ -84,7 +80,7 @@ function mainMenu() {
             case "view-all-employees":
 
                 db.viewAllEmployees()
-                    .then(([rows]) => {
+                    .then((rows) => {
                         let employees = rows;
                         console.table(employees);
                     })
@@ -110,7 +106,7 @@ function mainMenu() {
             case "add-a-role":
                 //Need an object list of departments
                 db.viewAllDepartments()
-                    .then(([rows]) => {
+                    .then((rows) => {
                         let departments = rows;
                         const listOfdepartments = departments.map(({ id, name }) => ({
                             name: name,
@@ -156,7 +152,7 @@ function mainMenu() {
                 };
 
                 db.viewAllRoles()
-                    .then(([rows]) => {
+                    .then((rows) => {
                         let roles = rows;
                         const listofRoles = roles.map(({ department_name, job_title, role_id, salary }) => ({
                             name: job_title,
@@ -178,7 +174,7 @@ function mainMenu() {
                             .then(role => {
                                 //Choose a RELEVANT manager to add to the new employee
                                 db.getAllManagers()
-                                    .then(([rows]) => {
+                                    .then((rows) => {
                                         let managers = rows;
                                         console.table(managers)
                                         const listofManagers = managers.map(({ first_name, last_name, employee_id }) => ({
@@ -237,7 +233,7 @@ function mainMenu() {
                 };
                 //Get a list of employees
                 db.viewAllEmployees()
-                    .then(([rows]) => {
+                    .then((rows) => {
                         let employees = rows;
                         const listofEmployees = employees.map(({ first_name, last_name, id }) => ({
                             name: first_name + ' ' + last_name,
@@ -266,7 +262,7 @@ function mainMenu() {
                             .then(employee => {
                                 //Get a list of roles to add the employee to
                                 db.viewAllRoles()
-                                    .then(([rows]) => {
+                                    .then((rows) => {
                                         let roles = rows;
                                         const listofRoles = roles.map(({ department_name, job_title, role_id, salary }) => ({
                                             name: job_title,

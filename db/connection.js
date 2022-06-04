@@ -1,8 +1,9 @@
-const mysql = require("mysql2");
+//const mysql = require("mysql2");
+const postgres = require("postgres");
 require('dotenv').config();
 
 
-const connection = mysql.createConnection({
+const connection = postgres({
 
   host: process.env.host,
   port: process.env.port,
@@ -11,8 +12,10 @@ const connection = mysql.createConnection({
   database: process.env.database
 });
 
-connection.connect(function (err) {
-  if (err) throw err;
-});
+//const connection = postgres('')
+
+// connection.connect(function (err) {
+//   if (err) throw err;
+// });
 
 module.exports = connection;
