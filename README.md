@@ -29,10 +29,10 @@ The application allows the user to add and delete notes.
 Create a file named .env with the following contents:
 
 ```
-host=yourMySQLhost      
-port=yourMySQLport
-user=your YourMySQLUser    
-password=yourmySQLPassword
+host=yourDbhost      
+port=yourDbport
+user=your YourDbUser    
+password=yourDbPassword
 ```
 
 ### Setting up the database
