@@ -31,8 +31,9 @@ Create a file named .env with the following contents:
 ```
 host=yourMySQLhost      
 port=yourMySQLport
-user=your YourMySQLUser    
+user=yourMySQLUserName    
 password=yourmySQLPassword
+database=yourDatabaseName
 ```
 
 ### Setting up the database
