@@ -1,6 +1,6 @@
 
     
-# Team Profile Generator
+# Employee Tracker
 
 ![](https://img.shields.io/badge/license-MIT-blue.svg)
     
